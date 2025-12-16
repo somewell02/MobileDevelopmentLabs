@@ -21,8 +21,8 @@ class MainActivity : AppCompatActivity() {
     }
     
     private fun loadTheme() {
-        val prefs = getSharedPreferences("app_preferences", Context.MODE_PRIVATE)
-        val isDark = prefs.getBoolean("dark_theme", false)
+        val prefs = getSharedPreferences("settings_prefs", Context.MODE_PRIVATE)
+        val isDark = prefs.getBoolean("is_dark_theme", false)
         if (isDark) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         } else {

@@ -1,15 +1,26 @@
 package com.example.myapplication.ui.fragments
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
+import androidx.fragment.app.viewModels
 import com.example.myapplication.R
-import com.example.myapplication.data.models.UserProfile
+import com.example.myapplication.databinding.FragmentProfileBinding
+import com.example.myapplication.data.repositories.UserRepositoryImpl
+import com.example.myapplication.ui.viewmodels.ProfileViewModel
+import com.example.myapplication.ui.viewmodels.ProfileViewModelFactory
 
 class ProfileFragment : BaseFragment() {
+    
+    private var _binding: FragmentProfileBinding? = null
+    private val binding get() = _binding!!
+    
+    private val viewModel: ProfileViewModel by viewModels {
+        ProfileViewModelFactory(UserRepositoryImpl(requireContext()))
+    }
     
     override fun getFragmentName(): String = "ProfileFragment"
     
@@ -17,30 +28,63 @@ class ProfileFragment : BaseFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_profile, container, false)
+    ): View {
+        _binding = FragmentProfileBinding.inflate(inflater, container, false)
+        return binding.root
     }
     
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         
-        val userProfile = UserProfile(
-            id = "somewell",
-            name = "Samvel Grigoryan",
-            email = "samvel121202@mail.ru",
-            status = "Online"
-        )
+        // Set default static data
+        binding.tvProfileEmail.text = "user@example.com"
+        binding.tvProfileUserId.text = "default_user"
+        binding.ivProfileAvatar.setImageResource(R.drawable.ic_launcher_foreground)
         
-        val avatarImageView = view.findViewById<ImageView>(R.id.iv_profile_avatar)
-        val nameTextView = view.findViewById<TextView>(R.id.tv_profile_name)
-        val emailTextView = view.findViewById<TextView>(R.id.tv_profile_email)
-        val statusTextView = view.findViewById<TextView>(R.id.tv_profile_status)
-        val userIdTextView = view.findViewById<TextView>(R.id.tv_profile_user_id)
-        
-        nameTextView.text = userProfile.name
-        emailTextView.text = userProfile.email
-        statusTextView.text = userProfile.status
-        userIdTextView.text = userProfile.id
-        avatarImageView.setImageResource(R.drawable.ic_launcher_foreground)
+        setupObservers()
+        setupEditTextListeners()
+    }
+    
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+    
+    private fun setupObservers() {
+        viewModel.userName.observe(viewLifecycleOwner) { name ->
+            if (binding.etProfileName.text.toString() != name) {
+                binding.etProfileName.setText(name)
+            }
+        }
+
+        viewModel.userStatus.observe(viewLifecycleOwner) { status ->
+            if (binding.etProfileStatus.text.toString() != status) {
+                binding.etProfileStatus.setText(status)
+            }
+        }
+    }
+    
+    private fun setupEditTextListeners() {
+        binding.etProfileName.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable?) {
+                val newName = s?.toString() ?: ""
+                if (viewModel.userName.value != newName) {
+                    viewModel.updateUserName(newName)
+                }
+            }
+        })
+
+        binding.etProfileStatus.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable?) {
+                val newStatus = s?.toString() ?: ""
+                if (viewModel.userStatus.value != newStatus) {
+                    viewModel.updateUserStatus(newStatus)
+                }
+            }
+        })
     }
 }

@@ -14,21 +14,37 @@
         android:background="@drawable/ic_launcher_background" />
 
     <TextView
-        android:id="@+id/tv_profile_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:text="Samvel Grigoryan"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:text="Name:"
+        android:textSize="12sp"
+        android:layout_marginBottom="4dp" />
 
-    <TextView
-        android:id="@+id/tv_profile_status"
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/et_profile_name"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
+        android:hint="Enter your name"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:inputType="textPersonName" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Status:"
+        android:textSize="12sp"
+        android:layout_marginBottom="4dp" />
+
+    <EditText
+        android:id="@+id/et_profile_status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:hint="Enter your status"
         android:textSize="14sp"
-        android:text="Online" />
+        android:inputType="text" />
 
     <TextView
         android:layout_width="wrap_content"
