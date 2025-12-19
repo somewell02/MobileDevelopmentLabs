@@ -5,4 +5,6 @@
     <string name="title_settings">Settings</string>
     <string name="news_placeholder_text">News Feed</string>
     <string name="news_description_text">This feature will be available soon.</string>
+    <string name="refresh_button_text">Refresh</string>
+    <string name="empty_state_message">No messages available</string>
 </resources>

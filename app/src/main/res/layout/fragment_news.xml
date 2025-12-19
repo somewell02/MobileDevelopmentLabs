@@ -4,29 +4,45 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center"
     android:padding="16dp"
     tools:context=".ui.fragments.NewsFragment">
 
-    <TextView
-        android:id="@+id/tv_news_placeholder"
+    <!-- Refresh Button -->
+    <Button
+        android:id="@+id/buttonRefresh"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/news_placeholder_text"
-        android:textSize="18sp"
-        android:textAlignment="center"
-        android:textColor="?android:attr/textColorPrimary"
-        android:fontFamily="sans-serif-medium"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/refresh_button_text"
         android:layout_marginBottom="16dp" />
 
-    <TextView
-        android:id="@+id/tv_news_description"
+    <!-- Loading Indicator -->
+    <ProgressBar
+        android:id="@+id/progressBarLoading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/news_description_text"
-        android:textSize="14sp"
-        android:textAlignment="center"
+        android:layout_gravity="center_horizontal"
+        android:visibility="gone"
+        android:layout_marginBottom="16dp" />
+
+    <!-- RecyclerView for Messages -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewMessages"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:visibility="visible" />
+
+    <!-- Empty State Message -->
+    <TextView
+        android:id="@+id/textViewEmptyState"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/empty_state_message"
+        android:textSize="16sp"
         android:textColor="?android:attr/textColorSecondary"
-        android:fontFamily="sans-serif" />
+        android:visibility="gone"
+        android:layout_marginTop="32dp" />
 
 </LinearLayout>
